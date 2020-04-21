@@ -3,8 +3,6 @@
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 <script src='https://unpkg.com/babel-standalone@6/babel.min.js'></script>
 <script type='text/babel'>
-// const rootElement = document.getElementById('root');
-// const element = <div className='container'>Hello with jsx</div> 
 
 class App extends React.Component{
   constructor(props) {
@@ -12,6 +10,7 @@ class App extends React.Component{
     this.state = {
       value:"", items : []
     }
+    // bind functions to this using arrow functions
   } 
   handleChange = (event) => {
       this.setState({value:event.target.value})
@@ -35,6 +34,15 @@ class App extends React.Component{
     this.setState({items:itemsCopy})
     console.log(this.state.items);
   }    
+  removeItem = index => {
+    const itemsCopy = this.state.items.slice()
+    itemsCopy.splice(index,1);
+    itemsCopy.sort((a,b) => {
+        return b.score - a.score
+    })
+    this.setState({items:itemsCopy})
+  }  
+
   render() {
     return (
       <div>
@@ -43,6 +51,7 @@ class App extends React.Component{
         <PostList 
           postList = {this.state.items}
           updateScore = { this.updateScore }  
+          removeItem = {this.remoteItem }
         />
       </div>
     )
@@ -54,9 +63,18 @@ function PostList(props){
     <ol>
       {
         props.postList.map((item,index) => 
-          <Post key = {index} 
+          <Post 
+            key = {index} 
             title = {item.title} 
             score = {item.score}
+            // When using onClick={doSomething()} , the doSomething() function executes immediately when the
+            // application is opened in a browser.
+            // However, using onClick={this.doSomething} wouldn’t suffice, because the argument/property
+            // needs to be passed to the class method. We wrap it into
+            // another function to sneak in the property. This concept is called higher-order functions in JavaScript,
+            incrementScore = { () => props.updateScore(index,1) }
+            decrementScore  = { () => props.updateScore(index,-1) }
+            removeItem = { () => props.removeItem(index) }
           />
         )
       }
@@ -65,28 +83,28 @@ function PostList(props){
 }
 
 function Post(props){
-    var style = {
-        display:"flex"
-    }
-    return (
-        <div style = {style}>
-            <PostButton label = "x"/>
-            <PostText text = {props.title} width = "200"/>
-            <PostButton label = "+" />
-            <PostText text = {props.score} width = "20"/>
-            <PostButton label = "-"/>
-        </div>
-    )
+  const style = {
+    display:"flex"
+  }
+  return (
+    <div style = {style}>
+      <PostButton label = "x" handleClick = {props.removeItem}/>
+      <PostText text = {props.title} width = "200"/>
+      <PostButton label = "+" handleClick = { props.incrementScore } />
+      <PostText text = {props.score} width = "20"/>
+      <PostButton label = "-" handleClick = { props.decrementScore }/>
+    </div>
+  )
 }
 
 function PostText(props){
-    var style = {
-        border:"1px solid black",
-        width: props.width
-    }
-    return (
-        <div style = {style}>{props.text}</div>
-    )
+  const style = {
+    border:"1px solid black",
+    width: props.width
+  }
+  return (
+    <div style = {style}>{props.text}</div>
+  )
 }
 
 function PostButton(props) {
@@ -95,10 +113,9 @@ function PostButton(props) {
     height: 24
   }
   return (
-    <button style = {style}>{props.label}</button>
+    <button style = {style} onClick = { props.handleClick }>{props.label}</button>
   )
 }
-// ReactDOM.render(element, rootElement)
 ReactDOM.render(
   <App/>,
   document.getElementById('root')
