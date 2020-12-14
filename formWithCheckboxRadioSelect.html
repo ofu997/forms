@@ -1,0 +1,104 @@
+<div id='root'></div>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src='https://unpkg.com/babel-standalone@6/babel.min.js'></script>
+<script type='text/babel'>
+
+class App extends React.Component {
+  constructor() {
+      super()
+      this.state = {
+          isFriendly: false,
+          drink: "",
+          favColor: "blue"
+      }
+      this.handleChange = this.handleChange.bind(this)
+  }
+  
+  handleChange(event) {
+      const {name, value, type, checked} = event.target
+      type === "checkbox" ? this.setState({ [name]: checked }) : this.setState({ [name]: value })
+  }
+  
+  render() {
+      return (
+          <form onSubmit={this.handleSubmit}>
+              {
+                  /**
+                   * Other useful form elements:
+                   * 
+                   *  <textarea /> element
+                   *  <input type="checkbox" />
+                   *  <input type="radio" />
+                   *  <select> and <option> elements
+                   */
+              }
+              
+              <textarea style={{ float: 'left' }}
+                  value={"Some default value"}
+                  onChange={this.handleChange}
+              />
+              
+              <br />
+
+              <div style={{ height: 40 }} />
+              
+              <label>
+                  <input
+                      type="checkbox" 
+                      name="isFriendly"
+                      checked={this.state.isFriendly}
+                      onChange={this.handleChange}
+                  /> Is friendly?
+              </label>
+              <br />
+              <label>
+                  <input 
+                      type="radio" 
+                      name="drink"
+                      value="Coffee"
+                      checked={this.state.drink === "Coffee"}
+                      onChange={this.handleChange}
+                  /> Coffee
+              </label>
+              <br />
+              <label>
+                  <input 
+                      type="radio" 
+                      name="drink"
+                      value="Tea"
+                      checked={this.state.drink === "Tea"}
+                      onChange={this.handleChange}
+                  /> Tea
+              </label>
+              {/* Formik */}
+              <br />
+              
+              <label>Favorite Color:</label>
+              <select 
+                  value={this.state.favColor}
+                  onChange={this.handleChange}
+                  name="favColor"
+              >
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                  <option value="red">Red</option>
+                  <option value="orange">Orange</option>
+                  <option value="yellow">Yellow</option>
+              </select>
+              
+              <h1>{this.state.firstName} {this.state.lastName}</h1>
+              <h2>You prefer {this.state.drink}</h2>
+              <h2>Your favorite color is {this.state.favColor}</h2>
+              <button>Submit</button>
+          </form>
+      )
+  }
+}
+
+ReactDOM.render(
+  <App/>,
+  document.getElementById('root')
+)
+
+</script>

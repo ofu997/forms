@@ -1,0 +1,166 @@
+<div id='root'></div>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src='https://unpkg.com/babel-standalone@6/babel.min.js'></script>
+<script type='text/babel'>
+
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      firstName : '',
+      lastName : '',
+      age : '',
+      gender : '',
+      location : '',
+      dietaryRestrictions : {
+        vegetarian: false,
+        vegan: false,
+        halal: false,
+        kosher: false,
+        pescatarian: false
+      }
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event) {
+    event.target.type==='checkbox'?
+      this.setState({
+        [event.target.name]: checked
+      })
+      :
+      this.setState({
+        [event.target.name] : event.target.value
+      })
+  }
+  
+  render() {
+    return (
+      <div>
+        <form>
+           <input
+            placeholder = "First Name" 
+            type = 'text'
+            value = {this.state.firstName}
+            name = 'firstName'
+            onChange = {this.handleChange}
+          /><br />
+          <input 
+            placeholder="Last Name" 
+            type = 'text'
+            value = {this.state.lastName}
+            name = 'lastName'
+            onChange = {this.handleChange}
+          /><br />
+          <input 
+            placeholder="Age" 
+            type = 'text'
+            value = {this.state.age}
+            name = 'age'
+            onChange = {this.handleChange}
+          />
+          <br />
+          
+          <input 
+            type = 'radio'
+            name = 'gender'
+            value = 'Male'
+            checked = {this.state.gender === 'Male'}
+            onChange = {this.handleChange}
+          /> Male
+          <br />
+
+          <input 
+            type = 'radio'
+            name = 'gender'
+            value = 'Female'
+            checked = {this.state.gender === 'Female'}
+            onChange = {this.handleChange}
+          /> Female
+          <br />
+
+          <input 
+            type = 'radio'
+            name = 'gender'
+            value = 'Other'
+            checked = {this.state.gender === 'Other'}
+            onChange = {this.handleChange}
+          /> Other
+          <br />
+          
+          Location <select 
+            value = {this.state.location}
+            onChange = {this.handleChange}
+            name = 'location'
+          >
+            <option value=''></option>
+            <option value='London'>London</option>
+            <option value='Paris'>Paris</option>
+            <option value='Tokyo'>Tokyo</option>
+          </select> 
+          <br />
+          
+          <input
+            type='checkbox'
+            name='dietaryRestrictions.vegetarian'
+            checked = {this.state.dietaryRestrictions.vegetarian}
+            onChange={this.handleChange}
+            value={this.state.dietaryRestrictions.vegetarian}
+          /> Vegetarian
+          <input
+            type='checkbox'
+            name='dietaryRestrictions'
+            checked = {this.state.dietaryRestrictions.vegan}
+            onChange={this.handleChange}
+          /> Vegan
+          <input
+            type='checkbox'
+            name='dietaryRestrictions'
+            checked = {this.state.dietaryRestrictions.halal}
+            onChange={this.handleChange}
+          /> Halal
+          <input
+            type='checkbox'
+            name='dietaryRestrictions'
+            checked = {this.state.dietaryRestrictions.kosher}
+            onChange={this.handleChange}
+          /> Kosher
+          <input
+            type='checkbox'
+            name='dietaryRestrictions'
+            checked = {this.state.dietaryRestrictions.pescatarian}
+            onChange={this.handleChange}
+          /> Pescatarian{/**/}
+          <br />
+          
+          <button>Submit</button>
+        </form>
+        
+        <hr />
+        <h2>Entered information:</h2>
+        <p>Your name: {`${this.state.firstName} ${this.state.lastName}`}</p>
+        <p>Your age: {this.state.age}</p>
+        <p>Your gender: {this.state.gender}</p>
+        <p>Your destination: {this.state.location}</p>
+        <p>
+            Your dietary restrictions: 
+        </p>
+        <div>
+            {this.state.dietaryRestrictions.vegetarian && <p>vegetarian</p>}
+            {this.state.dietaryRestrictions.vegan && <p>vegan</p>}
+            {this.state.dietaryRestrictions.halal && <p>halal</p>}
+            {this.state.dietaryRestrictions.kosher && <p>kosher</p>}
+            {this.state.dietaryRestrictions.pescatarian && <p>pescatarian</p>}
+        </div>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(
+  <App/>,
+  document.getElementById('root')
+)
+
+</script>
