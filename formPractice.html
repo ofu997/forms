@@ -13,13 +13,11 @@ class App extends React.Component {
       age : '',
       gender : '',
       location : '',
-      dietaryRestrictions : {
-        vegetarian: false,
-        vegan: false,
-        halal: false,
-        kosher: false,
-        pescatarian: false
-      }
+      vegetarian: false,
+      vegan: false,
+      halal: false,
+      kosher: false,
+      pescatarian: false
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -27,7 +25,7 @@ class App extends React.Component {
   handleChange(event) {
     event.target.type==='checkbox'?
       this.setState({
-        [event.target.name]: checked
+        [event.target.name]: event.target.checked
       })
       :
       this.setState({
@@ -62,31 +60,37 @@ class App extends React.Component {
           />
           <br />
           
-          <input 
-            type = 'radio'
-            name = 'gender'
-            value = 'Male'
-            checked = {this.state.gender === 'Male'}
-            onChange = {this.handleChange}
-          /> Male
+          <label>          
+            <input 
+              type = 'radio'
+              name = 'gender'
+              value = 'Male'
+              checked = {this.state.gender === 'Male'}
+              onChange = {this.handleChange}
+            /> Male
+          </label>
           <br />
 
-          <input 
-            type = 'radio'
-            name = 'gender'
-            value = 'Female'
-            checked = {this.state.gender === 'Female'}
-            onChange = {this.handleChange}
-          /> Female
+          <label>
+            <input 
+              type = 'radio'
+              name = 'gender'
+              value = 'Female'
+              checked = {this.state.gender === 'Female'}
+              onChange = {this.handleChange}
+            /> Female
+          </label>
           <br />
 
-          <input 
-            type = 'radio'
-            name = 'gender'
-            value = 'Other'
-            checked = {this.state.gender === 'Other'}
-            onChange = {this.handleChange}
-          /> Other
+          <label>
+            <input 
+              type = 'radio'
+              name = 'gender'
+              value = 'Other'
+              checked = {this.state.gender === 'Other'}
+              onChange = {this.handleChange}
+            /> Other
+          </label>
           <br />
           
           Location <select 
@@ -101,39 +105,48 @@ class App extends React.Component {
           </select> 
           <br />
           
-          <input
-            type='checkbox'
-            name='dietaryRestrictions.vegetarian'
-            checked = {this.state.dietaryRestrictions.vegetarian}
-            onChange={this.handleChange}
-            value={this.state.dietaryRestrictions.vegetarian}
-          /> Vegetarian
-          <input
-            type='checkbox'
-            name='dietaryRestrictions'
-            checked = {this.state.dietaryRestrictions.vegan}
-            onChange={this.handleChange}
-          /> Vegan
-          <input
-            type='checkbox'
-            name='dietaryRestrictions'
-            checked = {this.state.dietaryRestrictions.halal}
-            onChange={this.handleChange}
-          /> Halal
-          <input
-            type='checkbox'
-            name='dietaryRestrictions'
-            checked = {this.state.dietaryRestrictions.kosher}
-            onChange={this.handleChange}
-          /> Kosher
-          <input
-            type='checkbox'
-            name='dietaryRestrictions'
-            checked = {this.state.dietaryRestrictions.pescatarian}
-            onChange={this.handleChange}
-          /> Pescatarian{/**/}
+          <label>
+            <input
+              type='checkbox'
+              name='vegetarian'
+              checked = {this.state.vegetarian}
+              onChange={this.handleChange}
+              // value={this.state.dietaryRestrictions.vegetarian} Checkboxes don't have value properties!
+            /> Vegetarian
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              name='vegan'
+              checked = {this.state.vegan}
+              onChange={this.handleChange}
+            /> Vegan
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              name='halal'
+              checked = {this.state.halal}
+              onChange={this.handleChange}
+            /> Halal
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              name='kosher'
+              checked = {this.state.kosher}
+              onChange={this.handleChange}
+            /> Kosher
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              name='pescatarian'
+              checked = {this.state.pescatarian}
+              onChange={this.handleChange}
+            /> Pescatarian{/**/}
+          </label>
           <br />
-          
           <button>Submit</button>
         </form>
         
@@ -147,11 +160,11 @@ class App extends React.Component {
             Your dietary restrictions: 
         </p>
         <div>
-            {this.state.dietaryRestrictions.vegetarian && <p>vegetarian</p>}
-            {this.state.dietaryRestrictions.vegan && <p>vegan</p>}
-            {this.state.dietaryRestrictions.halal && <p>halal</p>}
-            {this.state.dietaryRestrictions.kosher && <p>kosher</p>}
-            {this.state.dietaryRestrictions.pescatarian && <p>pescatarian</p>}
+            {this.state.vegetarian && <p>vegetarian</p>}
+            {this.state.vegan && <p>vegan</p>}
+            {this.state.halal && <p>halal</p>}
+            {this.state.kosher && <p>kosher</p>}
+            {this.state.pescatarian && <p>pescatarian</p>}
         </div>
       </div>
     )
